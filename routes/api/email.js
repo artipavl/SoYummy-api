@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth: controllers } = require("../../controllers");
+const { email: controllers } = require("../../controllers");
 const { validateBody } = require("../../middlewares");
 const {
 	auth: { schemas },
@@ -7,11 +7,12 @@ const {
 
 const router = express.Router();
 
+router.get("/verify/:verificationCode", controllers.verifyEmail);
+
 router.post(
-	"/register",
-	validateBody(schemas.registerSchema),
-	controllers.registerUser
+	"/verify",
+	validateBody(schemas.emailSchema),
+	controllers.resendVerifyEmail
 );
-router.post("/login", validateBody(schemas.loginSchema), controllers.loginUser);
 
 module.exports = router;
