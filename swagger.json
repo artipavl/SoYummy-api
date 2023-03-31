@@ -87,7 +87,6 @@
       "get": {
         "tags": ["Auth"],
         "summary": "User login",
-        "parameters": [],
         "requestBody": {
           "description": "Auth object",
           "required": true,
@@ -115,13 +114,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "error"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -150,8 +143,6 @@
         "tags": ["Auth"],
         "summary": "User logout",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody": {},
         "responses": {
           "204": {
             "description": "No Content"
@@ -161,9 +152,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "description": "message",
-                  "example": "Not authorized"
+                  "$ref": "#/components/schemas/NotAuthorized"
                 }
               }
             }
@@ -176,8 +165,6 @@
         "tags": ["Auth"],
         "summary": "User current",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody": {},
         "responses": {
           "200": {
             "description": "OK",
@@ -194,9 +181,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "description": "message",
-                  "example": "Not authorized"
+                  "$ref": "#/components/schemas/NotAuthorized"
                 }
               }
             }
@@ -221,24 +206,83 @@
             }
           }
         },
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Verification email sent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/auth/:verificationToken": {
       "get": {
         "tags": ["Auth"],
         "summary": "User verification",
-        "parameters": [],
-        "requestBody": {
-          "description": "Auth object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {}
+        "parameters": [
+          {
+            "in": "payh",
+            "name": "verificationToken",
+            "required": true,
+            "type": "string",
+            "description": "Uset verification token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Verification successful"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
             }
           }
-        },
-        "responses": {}
+        }
       }
     },
 
@@ -344,6 +388,25 @@
             "type": "string",
             "description": "User's email",
             "format": "email"
+          }
+        }
+      },
+
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "error"
+          }
+        }
+      },
+      "NotAuthorized": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Not authorized"
           }
         }
       }
