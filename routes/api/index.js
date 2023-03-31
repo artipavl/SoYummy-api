@@ -1,4 +1,4 @@
 const recipeRouter = require("./recipe");
 const authRouter = require("./auth");
-
-module.exports = { recipeRouter, authRouter };
+const emailRouter = require("./email");
+module.exports = { recipeRouter, authRouter, emailRouter };
