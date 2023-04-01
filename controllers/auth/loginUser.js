@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
 		status: "Success",
 		data: {
 			user: {
-				id: user.id,
+				_id: user._id,
 				name: user.name,
 				email: user.email,
 				avatarUrl: user.avatarURL,
