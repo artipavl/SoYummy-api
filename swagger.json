@@ -13,7 +13,7 @@
   ],
   "tags": [
     {
-      "name": "Auth",
+      "name": "Users",
       "description": "Authorization endpoints"
     },
     {
@@ -34,11 +34,10 @@
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/users/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User registration",
-        "parameters": [],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -62,33 +61,34 @@
             }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Unable to save on database",
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Unable to save on database"
+              }
+            }
           },
           "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Email in use"
-                    }
-                  }
-                }
+            "description": "Email already in use",
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Email already in use"
               }
             }
           }
         }
       }
     },
-    "/auth/login": {
-      "get": {
-        "tags": ["Auth"],
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
         "summary": "User login",
         "requestBody": {
-          "description": "Auth object",
+          "description": "User object",
           "required": true,
           "content": {
             "application/json": {
@@ -109,18 +109,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
           "401": {
-            "description": "Unauthorized",
+            "description": "Email or password invalid / Email not verification / Email or password invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -128,7 +118,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Email or password is wrong"
+                      "example": "Email or password invalid / Email not verification / Email or password invalid"
                     }
                   }
                 }
@@ -138,14 +128,21 @@
         }
       }
     },
-    "/auth/logout": {
+    "/users/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User logout",
         "security": [{ "Bearer": [] }],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized",
@@ -160,9 +157,9 @@
         }
       }
     },
-    "/auth/current": {
+    "/users/current": {
       "get": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User current",
         "security": [{ "Bearer": [] }],
         "responses": {
@@ -189,9 +186,9 @@
         }
       }
     },
-    "/auth/verify": {
+    "/users/verify": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User verify",
         "requestBody": {
           "description": "Auth object",
@@ -223,20 +220,20 @@
           },
           "400": {
             "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Bad Request"
               }
             }
           }
         }
       }
     },
-    "/auth/:verificationToken": {
+    "/users/:verificationToken": {
       "get": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "User verification",
         "parameters": [
           {
@@ -257,7 +254,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Verification successful"
+                      "example": "Verification success"
                     }
                   }
                 }
@@ -273,7 +270,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "example": "Email not found"
                     }
                   }
                 }
@@ -340,7 +337,14 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Not Found"
+              }
+            }
           },
           "401": {
             "description": "Unauthorized",
@@ -382,7 +386,14 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Not Found"
+              }
+            }
           },
           "401": {
             "description": "Unauthorized",
@@ -424,7 +435,14 @@
             }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad request",
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Bad request"
+              }
+            }
           },
           "401": {
             "description": "Unauthorized",
@@ -640,13 +658,33 @@
       "RegistrationResponse": {
         "type": "object",
         "properties": {
-          "user": {
-            "type": "object",
+          "code": {
+            "type": "string",
+            "desctiption": "code",
+            "example": "201"
+          },
+          "message": {
+            "type": "string",
+            "desctiption": "code message",
+            "example": "success"
+          },
+          "data": {
+            "required": ["name", "email", "avatarURL"],
             "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "User"
+              },
               "email": {
                 "type": "string",
                 "description": "User's email",
                 "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "avatar URL",
+                "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
               }
             }
           }
@@ -672,30 +710,67 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "user": {
+          "code": {
+            "type": "string",
+            "desctiption": "code",
+            "example": "201"
+          },
+          "status": {
+            "type": "string",
+            "desctiption": "code message",
+            "example": "success"
+          },
+          "data": {
             "type": "object",
+            "required": ["User", "token"],
             "properties": {
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              },
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "User"
-              },
-              "icon": {
-                "type": "string",
-                "description": "User's icon",
-                "example": "Srting"
+              "User": {
+                "required": ["id", "name", "email", "avatarURL"],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "41286728914238293418w24qe9"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "avtarURL": {
+                    "type": "string",
+                    "description": "avtar URL",
+                    "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "User's token",
+                    "example": "2194d847192801764981s7mn9"
+                  }
+                }
               }
             }
-          },
-          "token": {
+          }
+        }
+      },
+
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
             "type": "string",
-            "description": "User's icon",
-            "example": "Srting"
+            "desctiption": "code",
+            "example": "200"
+          },
+          "status": {
+            "type": "string",
+            "desctiption": "code message",
+            "example": "success"
           }
         }
       },
@@ -1141,7 +1216,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Not authorized"
+            "example": "Unauthorized"
           }
         }
       }
