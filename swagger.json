@@ -193,7 +193,6 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User verify",
-        "parameters": [],
         "requestBody": {
           "description": "Auth object",
           "required": true,
@@ -241,7 +240,7 @@
         "summary": "User verification",
         "parameters": [
           {
-            "in": "payh",
+            "in": "path",
             "name": "verificationToken",
             "required": true,
             "type": "string",
@@ -391,8 +390,77 @@
       }
     },
 
-    "/ingredients": {},
-    "/ingredients/list": {}
+    "/ingredients": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Get recipes",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "required": true,
+            "name": "q",
+            "type": "string",
+            "description": "query",
+            "example": "Chicken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ownRecipesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredients/list": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Get list ingredients",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ingredientsList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "components": {
     "schemas": {
@@ -492,6 +560,42 @@
         }
       },
 
+
+      "ingredientsList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "id",
+              "example": "640cd5ac2d9fecf12e8897fc"
+            },
+            "ttl": {
+              "type": "string",
+              "description": "ttl",
+              "example": "Chicken"
+            },
+            "desc": {
+              "type": "string",
+              "description": "instructions",
+              "example": "The chicken is a type of domesticated fowl, a subspecies of the red junglefowl (Gallus gallus). It is one of the most common and widespread domestic animals, with a total population of more than 19 billion as of 2011. There are more chickens in the world than any other bird or domesticated fowl. Humans keep chickens primarily as a source of food (consuming both their meat and eggs) and, less commonly, as pets. Originally raised for cockfighting or for special ceremonies, chickens were not kept for food until the Hellenistic period (4th–2nd centuries BC).\r\n\r\nGenetic studies have pointed to multiple maternal origins in South Asia, Southeast Asia, and East Asia, but with the clade found in the Americas, Europe, the Middle East and Africa originating in the Indian subcontinent. From ancient India, the domesticated chicken spread to Lydia in western Asia Minor, and to Greece by the 5th century BC. Fowl had been known in Egypt since the mid-15th century BC, with the \"bird that gives birth every day\" having come to Egypt from the land between Syria and Shinar, Babylonia, according to the annals of Thutmose III."
+            },
+            "t": {
+              "type": "string",
+              "description": "t",
+              "example": ""
+            },
+            "thb": {
+              "type": "string",
+              "description": "thb",
+              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/rw8pn3541bmukb8d3mio.png"
+            }
+          }
+        }
+      },
+
+      
       "ownRecipesResponse": {
         "type": "array",
         "items": {
@@ -737,6 +841,7 @@
           }
         }
       },
+
       "Error": {
         "type": "object",
         "properties": {
