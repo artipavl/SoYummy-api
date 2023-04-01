@@ -42,7 +42,7 @@ const registerUser = async (req, res, next) => {
 	res.status(201).json({
 		code: 201,
 		message: "success",
-		data: { name: newUser.name, email: newUser.email, avatarURL },
+		data: { user: { name: newUser.name, email: newUser.email, avatarURL } },
 	});
 };
 

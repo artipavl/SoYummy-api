@@ -20,6 +20,10 @@ const resendVerifyEmail = async (req, res) => {
 		html: `<a target="_blanc" href="${BASE_URL}/api/auth/verify/${user.verificationCode}">Click here to verification email</a>`,
 	};
 	await sendEmail(verifyEmail);
+	await User.findByIdAndUpdate(user._id, {
+		verify: true,
+		verificationCode: "",
+	});
 	res.json({
 		code: 200,
 		status: "success",

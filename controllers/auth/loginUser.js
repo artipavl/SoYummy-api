@@ -13,9 +13,9 @@ const loginUser = async (req, res) => {
 	if (!user.email) {
 		throw HttpError(401, "Email or password invalid");
 	}
-	if (!user.verify) {
-		throw HttpError(401, "Email not verification");
-	}
+	// if (!user.verify) {
+	// 	throw HttpError(401, "Email not verification");
+	// }
 	const passwordCompare = bcrypt.compare(password, user.password);
 
 	if (!passwordCompare) {
@@ -29,7 +29,15 @@ const loginUser = async (req, res) => {
 	res.json({
 		code: 200,
 		status: "Success",
-		data: { token },
+		data: {
+			user: {
+				id: user.id,
+				name: user.name,
+				email: user.email,
+				avatarUrl: user.avatarURL,
+				token,
+			},
+		},
 	});
 };
 

@@ -13,13 +13,13 @@ const userSchema = new Schema(
 		email: {
 			type: String,
 			match: emailRegexp,
-			require: [true, "db: Email is required"],
+			required: [true, "db: Email is required"],
 			unique: true,
 		},
 		password: {
 			type: String,
 			minlength: 6,
-			require: [true, "db: Password is required"],
+			required: [true, "db: Password is required"],
 		},
 		token: {
 			type: String,
@@ -36,6 +36,11 @@ const userSchema = new Schema(
 		verificationCode: {
 			type: String,
 			default: "",
+		},
+		subscribed: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	{ versionKey: false, timestamps: true }

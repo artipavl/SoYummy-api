@@ -15,4 +15,10 @@ router.post(
 	controllers.resendVerifyEmail
 );
 
+router.post(
+	"/subscribe",
+
+	validateBody(schemas.emailSchema),
+	controllers.subscribed
+);
 module.exports = router;
