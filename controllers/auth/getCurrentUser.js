@@ -10,6 +10,7 @@ const getCurrentUser = async (req, res, next) => {
     name: 1,
     email: 1,
     avatarURL: 1,
+    token: 1,
   });
   if (!currentUser) {
     throw HttpError(400, "User not found");
@@ -17,7 +18,7 @@ const getCurrentUser = async (req, res, next) => {
   res.json({
     code: 200,
     status: "Success",
-    data: { currentUser },
+    data: { user: currentUser },
   });
 };
 module.exports = getCurrentUser;
