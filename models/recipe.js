@@ -1,9 +1,10 @@
 const Joi = require("joi");
 const { Schema, model } = require("mongoose");
 
-const handleMongooseError = require("../helpers/handleMongooseError");
+const { handleMongooseError } = require("../helpers");
 
 const timeRegExp = /^\d+$/;
+
 
 const recipeSchema = new Schema(
   {
