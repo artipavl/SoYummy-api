@@ -20,10 +20,14 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "avatars",
-    allowedFormats: ["jpg", "png"],
-    // filename: (req, file, cb) => {
-    //   cb(null, file.originalname);
-    // },
+    allowed_formats: ["jpg", "png"],
+    transformation: {
+      width: 100,
+      height: 100,
+      crop: "thumb",
+      gravity: "auto",
+      zoom: 0.75,
+    },
   },
 });
 
