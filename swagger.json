@@ -353,7 +353,7 @@
       }
     },
 
-    "/recipe": {
+    "/recipes": {
       "get": {
         "tags": ["Recipe"],
         "summary": "Get recipes",
@@ -382,7 +382,7 @@
         }
       }
     },
-    "/recipe/list/{category}": {
+    "/recipes/list/{category}": {
       "get": {
         "tags": ["Recipe"],
         "summary": "Get recipe",
@@ -437,7 +437,7 @@
         }
       }
     },
-    "/recipe/{id}": {
+    "/recipes/{id}": {
       "get": {
         "tags": ["Recipe"],
         "summary": "Get recipe",
@@ -493,7 +493,7 @@
         }
       }
     },
-    "/recipe/main-page": {
+    "/recipes/main-page": {
       "get": {
         "tags": ["Recipe"],
         "summary": "Get recipe",
@@ -522,7 +522,7 @@
         }
       }
     },
-    "/recipe/category-list": {
+    "/recipes/category-list": {
       "get": {
         "tags": ["Recipe"],
         "summary": "Get recipe",
