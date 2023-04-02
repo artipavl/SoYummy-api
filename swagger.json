@@ -62,21 +62,33 @@
           },
           "400": {
             "description": "Unable to save on database",
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Unable to save on database"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Unable to save on database"
+                    }
+                  }
+                }
               }
             }
           },
           "409": {
             "description": "Email already in use",
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Email already in use"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email already in use"
+                    }
+                  }
+                }
               }
             }
           }
@@ -220,11 +232,17 @@
           },
           "400": {
             "description": "Bad Request",
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Bad Request"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
               }
             }
           }
@@ -338,11 +356,17 @@
           },
           "404": {
             "description": "Not Found",
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Not Found"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
               }
             }
           },
@@ -387,11 +411,18 @@
           },
           "400": {
             "description": "Not Found",
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": ":id is not a valid"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": ":id is not a valid"
+                    }
+                  }
+                }
               }
             }
           },
@@ -640,6 +671,8 @@
         }
       }
     }
+
+    
   },
   "components": {
     "schemas": {
