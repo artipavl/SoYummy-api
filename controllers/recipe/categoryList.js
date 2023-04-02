@@ -4,7 +4,7 @@ const { HttpError } = require("../../helpers");
 const categoryList = async (req, res) => {
   console.log("result: ");
   const categories = await recipe.distinct("category");
-  if (!result) {
+  if (!categories) {
     throw HttpError(500, "Server error");
   }
 
