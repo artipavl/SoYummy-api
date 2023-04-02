@@ -7,20 +7,20 @@ const recipesByCategory = async (request, response) => {
 
   const { page = 1, limit = 8 } = request.query;
   const skip = (page - 1) * limit;
-  const result = await recipe.find(
+  const recipes = await recipe.find(
     { category },
     "title category thumb preview",
     { skip, limit }
   );
 
-  if (!result) {
+  if (!recipes) {
     throw HttpError(404, "Not found");
   }
   response.json({
     status: "success",
     code: 200,
     data: {
-      result,
+      recipes,
     },
   });
 };

@@ -7,10 +7,10 @@ const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
 const {
-  recipeRouter,
-  authRouter,
-  emailRouter,
-  userUpdateRouter,
+	recipeRouter,
+	authRouter,
+	emailRouter,
+	favoriteRouter,
 } = require("./routes/api");
 
 const app = express();
@@ -25,6 +25,8 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/recipe", recipeRouter);
 app.use("/api/users", authRouter, emailRouter, userUpdateRouter);
+app.use("/api/favorites", favoriteRouter);
+
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

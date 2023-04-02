@@ -3,7 +3,7 @@ const { HttpError } = require("../../helpers");
 
 const categoryList = async (req, res) => {
   console.log("result: ");
-  const result = await recipe.distinct("category");
+  const categories = await recipe.distinct("category");
   if (!result) {
     throw HttpError(500, "Server error");
   }
@@ -11,7 +11,7 @@ const categoryList = async (req, res) => {
   res.json({
     status: "success",
     code: 200,
-    data: { result },
+    data: { categories },
   });
 };
 module.exports = categoryList;
