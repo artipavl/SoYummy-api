@@ -15,4 +15,11 @@ router.get("/list/:category", recipe.recipesByCategory);
 
 router.get("/category-list", recipe.categoryList);
 
+router.get("/search/:title", recipe.recipeByTitle);
+
+router.get("/search/recipes/:ingredientId", recipe.recipesByIngredient);
+
+router.get("/ingredients", recipe.allIngredients);
+
+
 module.exports = router;
