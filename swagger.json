@@ -21,16 +21,8 @@
       "description": "Recipe"
     },
     {
-      "name": "Ingredients",
-      "description": "Ingredients"
-    },
-    {
-      "name": "ownRecipes",
-      "description": "ownRecipes"
-    },
-    {
-      "name": "Ingredients",
-      "description": "Ingredients"
+      "name": "Favorite",
+      "description": "Favorite"
     }
   ],
   "paths": {
@@ -299,7 +291,7 @@
       }
     },
     "/users/subscribe": {
-      "get": {
+      "post": {
         "tags": ["Users"],
         "summary": "User subscribe",
         "security": [{ "Bearer": [] }],
@@ -560,136 +552,21 @@
       }
     },
 
-    "/ownRecipes": {
+    "/favorite": {
       "get": {
-        "tags": ["ownRecipes"],
-        "summary": "Get user recipes",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ownRecipesResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotAuthorized"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/ownRecipes/addRecipe": {
-      "post": {
-        "tags": ["ownRecipes"],
-        "summary": "Add user recipes",
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Recipe object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ownRecipesAdd"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotAuthorized"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/ownRecipes/deleteRecipe": {
-      "delete": {
-        "tags": ["ownRecipes"],
-        "summary": "delete user recipe",
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Recipe id",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ownRecipesDelete"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Delete success"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotAuthorized"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-
-    "/ingredients": {
-      "get": {
-        "tags": ["Ingredients"],
+        "tags": ["Favorite"],
         "summary": "Get recipes",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "query",
-            "required": true,
-            "name": "q",
-            "type": "string",
-            "description": "query",
-            "example": "Chicken"
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ownRecipesResponse"
+                  "$ref": "#/components/schemas/FavoriteResponse"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized",
@@ -697,6 +574,23 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": "Not Found"
+                    }
+                  }
                 }
               }
             }
@@ -704,10 +598,10 @@
         }
       }
     },
-    "/ingredients/list": {
-      "get": {
-        "tags": ["Ingredients"],
-        "summary": "Get list ingredients",
+    "/favorite/{id}": {
+      "patch": {
+        "tags": ["Favorite"],
+        "summary": "Get recipes",
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -715,7 +609,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ingredientsList"
+                  "type": "object",
+                  "description": "response",
+                  "properties": {
+                    "code": {
+                      "type": "intager",
+                      "description": "code",
+                      "example": "200"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "status",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "message",
+                      "example": "Recipe with id ${id} added to favorite success"
+                    }
+                  }
                 }
               }
             }
@@ -726,6 +638,119 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Recipe already favorite",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": "Recipe already favorite"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Favorite"],
+        "summary": "Get recipes",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "response",
+                  "properties": {
+                    "code": {
+                      "type": "intager",
+                      "description": "code",
+                      "example": "200"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "status",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "message",
+                      "example": "Recipe with id ${id} success removed "
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "desctiption": "message",
+                      "example": "Bad Request"
+                    }
+                  }
                 }
               }
             }
@@ -1192,253 +1217,6 @@
           }
         }
       },
-
-      "ownRecipesResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "id",
-              "example": "640cd5ac2d9fecf12e8897fc"
-            },
-            "title": {
-              "type": "string",
-              "description": "title",
-              "example": "Spaghetti Bolognese"
-            },
-            "category": {
-              "type": "string",
-              "description": "category",
-              "example": "Beef"
-            },
-            "area": {
-              "type": "string",
-              "description": "area",
-              "example": "Italian"
-            },
-            "instructions": {
-              "type": "string",
-              "description": "instructions",
-              "example": "Put the onion and oil in a large pan and fry over a fairly high heat for 3-4 mins. Add the garlic and mince and fry until they both brown. Add the mushrooms and herbs, and cook for another couple of mins.\r\n\r\nStir in the tomatoes, beef stock, tomato ketchup or purée, Worcestershire sauce and seasoning. Bring to the boil, then reduce the heat, cover and simmer, stirring occasionally, for 30 mins.\r\n\r\nMeanwhile, cook the spaghetti in a large pan of boiling, salted water, according to packet instructions. Drain well, run hot water through it, put it back in the pan and add a dash of olive oil, if you like, then stir in the meat sauce. Serve in hot bowls and hand round Parmesan cheese, for sprinkling on top."
-            },
-            "description": {
-              "type": "string",
-              "description": "description",
-              "example": "An Italian pasta dish made with spaghetti and a meat-based sauce, typically containing beef, tomatoes, onions, garlic, and herbs."
-            },
-            "thumb": {
-              "type": "string",
-              "description": "thumb",
-              "example": "https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg"
-            },
-            "preview": {
-              "type": "string",
-              "description": "preview",
-              "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
-            },
-            "time": {
-              "type": "string",
-              "description": "time",
-              "example": "45"
-            },
-            "popularity": {
-              "type": "intager",
-              "description": "popularity",
-              "example": "2"
-            },
-            "favorites": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "time",
-                "example": "640cd5ac2d9fecf12e8897ee"
-              }
-            },
-            "likes": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "time",
-                "example": "640cd5ac2d9fecf12e8897ee"
-              }
-            },
-            "youtube": {
-              "type": "string",
-              "description": "youtube",
-              "example": "https://www.youtube.com/watch?v=-gF8d-fitkU"
-            },
-            "tags": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "tags",
-                "example": "Pasta"
-              }
-            },
-            "createdAt": {
-              "type": "string",
-              "description": "createdAt",
-              "example": "2023-03-11T19:25:33.240+00:00"
-            },
-            "updatedAt": {
-              "type": "string",
-              "description": "updatedAt",
-              "example": "2023-03-11T19:25:33.240+00:00"
-            },
-            "ingredients": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "description": "ingredient",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "createdAt",
-                    "example": "640c2dd963a319ea671e372e"
-                  },
-                  "measure": {
-                    "type": "string",
-                    "description": "createdAt",
-                    "example": "2"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ownRecipesAdd": {
-        "type": "object",
-        "required": [
-          "title",
-          "category",
-          "area",
-          "instructions",
-          "thumb",
-          "time",
-          "ingredients"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "title",
-            "example": "Spaghetti Bolognese"
-          },
-          "category": {
-            "type": "string",
-            "description": "category",
-            "example": "Beef"
-          },
-          "area": {
-            "type": "string",
-            "description": "area",
-            "example": "Italian"
-          },
-          "instructions": {
-            "type": "string",
-            "description": "instructions",
-            "example": "Put the onion and oil in a large pan and fry over a fairly high heat for 3-4 mins. Add the garlic and mince and fry until they both brown. Add the mushrooms and herbs, and cook for another couple of mins.\r\n\r\nStir in the tomatoes, beef stock, tomato ketchup or purée, Worcestershire sauce and seasoning. Bring to the boil, then reduce the heat, cover and simmer, stirring occasionally, for 30 mins.\r\n\r\nMeanwhile, cook the spaghetti in a large pan of boiling, salted water, according to packet instructions. Drain well, run hot water through it, put it back in the pan and add a dash of olive oil, if you like, then stir in the meat sauce. Serve in hot bowls and hand round Parmesan cheese, for sprinkling on top."
-          },
-          "description": {
-            "type": "string",
-            "description": "description",
-            "example": "An Italian pasta dish made with spaghetti and a meat-based sauce, typically containing beef, tomatoes, onions, garlic, and herbs."
-          },
-          "thumb": {
-            "type": "string",
-            "description": "thumb",
-            "example": "https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg"
-          },
-          "preview": {
-            "type": "string",
-            "description": "preview",
-            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
-          },
-          "time": {
-            "type": "string",
-            "description": "time",
-            "example": "45"
-          },
-          "popularity": {
-            "type": "intager",
-            "description": "popularity",
-            "example": "2"
-          },
-          "favorites": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "time",
-              "example": "640cd5ac2d9fecf12e8897ee"
-            }
-          },
-          "likes": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "time",
-              "example": "640cd5ac2d9fecf12e8897ee"
-            }
-          },
-          "youtube": {
-            "type": "string",
-            "description": "youtube",
-            "example": "https://www.youtube.com/watch?v=-gF8d-fitkU"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "tags",
-              "example": "Pasta"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "createdAt",
-            "example": "2023-03-11T19:25:33.240+00:00"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "updatedAt",
-            "example": "2023-03-11T19:25:33.240+00:00"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": ["id", "example"],
-              "description": "ingredient",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "createdAt",
-                  "example": "640c2dd963a319ea671e372e"
-                },
-                "measure": {
-                  "type": "string",
-                  "description": "createdAt",
-                  "example": "2"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ownRecipesDelete": {
-        "type": "object",
-        "required": ["id"],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Id recipe",
-            "example": "640c2dd963a319ea671e372e"
-          }
-        }
-      },
-
       "MeinPageRecipes": {
         "type": "array",
         "items": {
@@ -1456,6 +1234,35 @@
             },
             "Recipes": {
               "$ref": "#/components/schemas/ownRecipesResponse"
+            }
+          }
+        }
+      },
+
+      "FavoriteResponse": {
+        "type": "object",
+        "description": "response",
+        "properties": {
+          "code": {
+            "type": "intager",
+            "description": "code",
+            "example": "200"
+          },
+          "status": {
+            "type": "string",
+            "description": "status",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "description": "data",
+            "properties": {
+              "result": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
             }
           }
         }
