@@ -298,6 +298,68 @@
         }
       }
     },
+    "/users/subscribe": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "User subscribe",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscribeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Already subscribed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
 
     "/recipe": {
       "get": {
@@ -671,8 +733,6 @@
         }
       }
     }
-
-    
   },
   "components": {
     "schemas": {
@@ -800,7 +860,6 @@
           }
         }
       },
-
       "LogoutResponse": {
         "type": "object",
         "properties": {
@@ -811,8 +870,40 @@
           },
           "status": {
             "type": "string",
-            "desctiption": "code message",
+            "desctiption": "status",
             "example": "success"
+          }
+        }
+      },
+
+      "SubscribeRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "SubscribeResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "desctiption": "code",
+            "example": "200"
+          },
+          "status": {
+            "type": "string",
+            "desctiption": "status",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "desctiption": "message",
+            "example": "subscribe to updates successfully"
           }
         }
       },
