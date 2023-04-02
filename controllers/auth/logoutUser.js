@@ -8,7 +8,7 @@ const logoutUser = async (req, res, next) => {
   const token = "";
   const user = await User.findByIdAndUpdate(userId, { token });
   if (!user) {
-    throw HttpError(401, "User not authorized");
+    throw HttpError(400, "User not found");
   }
   res.json({
     code: 200,

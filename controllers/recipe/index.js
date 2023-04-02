@@ -1,10 +1,9 @@
 const { ctrlWrapper } = require("../../helpers");
 
-
-const allRecipes = require('./allRecipes');
-const recipesById = require('./recipesById');
-const recipesMainPage = require('./recipesMainPage');
-const recipesByCategory = require('./recipesByCategory');
+const allRecipes = require("./allRecipes");
+const recipesById = require("./recipesById");
+const recipesMainPage = require("./recipesMainPage");
+const recipesByCategory = require("./recipesByCategory");
 const categoryList = require("./categoryList");
 const recipeByTitle = require("./recipeByTitle");
 const recipesByIngredient = require('./recipesByIngredient');
@@ -20,5 +19,3 @@ module.exports = {
     recipesByIngredient: ctrlWrapper(recipesByIngredient),
     allIngredients:ctrlWrapper(allIngredients),
   };
-
-

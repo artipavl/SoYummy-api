@@ -6,7 +6,12 @@ const swaggerDocument = require("./swagger.json");
 
 require("dotenv").config();
 
-const { recipeRouter, authRouter, emailRouter } = require("./routes/api");
+const {
+	recipeRouter,
+	authRouter,
+	emailRouter,
+	favoriteRouter,
+} = require("./routes/api");
 
 const app = express();
 
@@ -16,12 +21,11 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-
-
 app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/api/recipe", recipeRouter);
+app.use("/api/recipes", recipeRouter);
 app.use("/api/users", authRouter, emailRouter);
+app.use("/api/favorites", favoriteRouter);
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Not found" });
