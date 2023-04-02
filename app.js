@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/api/recipe", recipeRouter);
+app.use("/api/recipes", recipeRouter);
 app.use("/api/users", authRouter, emailRouter);
 app.use("/api/favorite", favoriteRouter);
 
