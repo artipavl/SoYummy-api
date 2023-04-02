@@ -1,7 +1,7 @@
 const express = require("express");
 
-const { recipe } = require('../../controllers');
-const { isValidId } = require('../../middlewares');
+const { recipe } = require("../../controllers");
+const { isValidId } = require("../../middlewares");
 
 const router = express.Router();
 
