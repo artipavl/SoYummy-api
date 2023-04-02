@@ -552,7 +552,7 @@
       }
     },
 
-    "/favorite": {
+    "/favorites": {
       "get": {
         "tags": ["Favorite"],
         "summary": "Get recipes",
@@ -598,7 +598,7 @@
         }
       }
     },
-    "/favorite/{id}": {
+    "/favorites/{id}": {
       "patch": {
         "tags": ["Favorite"],
         "summary": "Get recipes",
