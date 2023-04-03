@@ -8,13 +8,15 @@ const listIngredients = async (req, res) => {
   const { shoppingList } = await User.findById(userId);
 
   if (!shoppingList) {
-    throw HttpError(400, "No list ingridients");
+    throw HttpError(400, "No list ingredients");
   }
 
   res.json({
     code: 200,
     status: "Success",
-    data: shoppingList,
+    data: {
+      result: shoppingList,
+    },
   });
 };
 

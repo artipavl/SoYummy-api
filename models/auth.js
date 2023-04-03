@@ -40,7 +40,12 @@ const userSchema = new Schema(
     shoppingList: {
       type: [
         {
-          ingridientId: {
+          recipeId: {
+            type: Schema.Types.ObjectId,
+            ref: "recipe",
+            required: true,
+          },
+          ingredientId: {
             type: Schema.Types.ObjectId,
             ref: "ingredient",
             required: true,

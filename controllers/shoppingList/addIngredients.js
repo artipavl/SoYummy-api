@@ -7,15 +7,17 @@ const addIngredients = async (req, res) => {
   const { _id: userId } = req.user;
   const user = await User.findByIdAndUpdate(userId, { new: true });
   if (!user.shoppingList) {
-    throw HttpError(400, "No list ingridients");
+    throw HttpError(400, "No list ingredients");
   }
-  user.shoppingList.push(...req.body);
+  user.shoppingList.push(req.body);
   const updatedUser = await user.save();
 
   res.json({
     code: 200,
     status: "Success",
-    data: updatedUser.shoppingList,
+    data: {
+      result: updatedUser.shoppingList,
+    },
   });
 };
 module.exports = addIngredients;
