@@ -5,6 +5,7 @@ const { HttpError } = require("../../helpers");
 
 const getCurrentUser = async (req, res, next) => {
   const { _id: userId } = req.user;
+
   const currentUser = await User.findById(userId, {
     _id: 1,
     name: 1,

@@ -95,8 +95,13 @@ const recipeSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "ingredient",
           required: true,
+          measure: {
+            type: String,
+            required: true,
+          },
         },
       ],
+      required: true,
     },
   },
   {
