@@ -78,7 +78,7 @@ const recipesMainPage = async (request, response) => {
     status: "success",
     code: 200,
     data: {
-      recipes: dishesArray,
+      result: dishesArray,
     },
   });
 };
