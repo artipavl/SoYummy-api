@@ -8,8 +8,8 @@
   "consumes": ["application/json", "multipare/form-data"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "http://localhost:3000/api" },
-    { "url": "https://so-yummy-api.onrender.com/api" }
+    { "url": "https://so-yummy-api.onrender.com/api" },
+    { "url": "http://localhost:3000/api" }
   ],
   "tags": [
     {
@@ -551,6 +551,9 @@
         }
       }
     },
+    "/recipes/search/:title": {},
+    "/recipes/search/ingredients/:ingredientId": {},
+    "/recipes/ingredients": {},
 
     "/favorites": {
       "get": {
