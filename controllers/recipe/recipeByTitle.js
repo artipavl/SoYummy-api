@@ -1,6 +1,6 @@
 const { recipe } = require("../../models");
 
-// const { HttpError } = require("../../helpers");
+const { HttpError } = require("../../helpers");
 
 const recipeByTitle = async (req, res) => {
   const { title } = req.params;
@@ -11,9 +11,9 @@ const recipeByTitle = async (req, res) => {
     "-createdAt -updatedAt",
     { skip, limit }
   );
-  //   if (!result) {
-  //   throw HttpError(404, "Not found");
-  // }
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
   res.json({
     status: "success",
     code: 200,
