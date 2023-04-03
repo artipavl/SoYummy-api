@@ -8,6 +8,7 @@ const categoryList = require("./categoryList");
 const recipeByTitle = require("./recipeByTitle");
 const recipesByIngredient = require("./recipesByIngredient");
 const allIngredients = require("./allIngredients");
+const popularRecipes = require("./popularRecipes");
 
 module.exports = {
   allRecipes: ctrlWrapper(allRecipes),
@@ -18,4 +19,5 @@ module.exports = {
   recipeByTitle: ctrlWrapper(recipeByTitle),
   recipesByIngredient: ctrlWrapper(recipesByIngredient),
   allIngredients: ctrlWrapper(allIngredients),
+  popularRecipes: ctrlWrapper(popularRecipes),
 };
