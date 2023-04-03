@@ -551,8 +551,46 @@
         }
       }
     },
-    "/recipes/search/:title": {},
-    "/recipes/search/ingredients/:ingredientId": {},
+    "/recipes/search/{title}": {
+      "get": {
+        "tags": ["Recipe"],
+        "summary": "Get recipe",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "title",
+            "required": true,
+            "type": "string",
+            "description": "title recipe",
+            "exampl": "Teriyaki Chicken Casserole"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/search/ingredients/{ingredientId}": {},
     "/recipes/ingredients": {},
 
     "/favorites": {
