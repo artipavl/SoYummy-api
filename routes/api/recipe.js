@@ -33,11 +33,10 @@ router.get("/category-list", authenticate, recipe.categoryList);
 
 router.get("/search/:title", authenticate, recipe.recipeByTitle);
 
-router.get(
-	"/search/ingredients/:ingredientId",
-	authenticate,
-	recipe.recipesByIngredient
-);
+router.get("/search", authenticate, recipe.recipeByTitle);
+
+router.get("/searchByIngredient", authenticate, recipe.recipesByIngredient);
+
 
 router.get("/ingredients", authenticate, recipe.allIngredients);
 
