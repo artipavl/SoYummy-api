@@ -352,6 +352,62 @@
         }
       }
     },
+    "/users/update-user": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "User update",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update object",
+          "required": true,
+          "content": {
+            "multipare/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Missing fields! You need to provide at least one field to proceed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
 
     "/recipes": {
       "get": {
@@ -981,6 +1037,25 @@
             "type": "string",
             "desctiption": "status",
             "example": "success"
+          }
+        }
+      },
+
+      "UpdateUserRequest": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary",
+            "contentType": ["image/png", "image/jpeg"],
+            "description": "User avatar",
+            "example": "C:Users/38097PicturesScreenshots.jpg"
           }
         }
       },
