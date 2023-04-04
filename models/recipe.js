@@ -100,9 +100,9 @@ const recipeSchema = new Schema(
             type: String,
             required: true,
           },
+
         },
       ],
-      required: true,
     },
   },
   {
