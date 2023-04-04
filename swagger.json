@@ -390,7 +390,7 @@
             }
           },
           "400": {
-            "description": "Unauthorized",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -401,6 +401,35 @@
                       "example": "Missing fields! You need to provide at least one field to proceed"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current/achievement": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "User achievement",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AchievementResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
                 }
               }
             }
@@ -1175,6 +1204,46 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
+          }
+        }
+      },
+      "AchievementResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "desctiption": "code",
+            "example": "201"
+          },
+          "status": {
+            "type": "string",
+            "desctiption": "code message",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "User"
+              },
+              "annexedDays": {
+                "type": "intager",
+                "description": "Days",
+                "example": 2
+              },
+              "ownCount": {
+                "type": "intager",
+                "description": "own",
+                "example": 2
+              },
+              "favoritesCount": {
+                "type": "intager",
+                "description": "favorites",
+                "example": 2
+              }
+            }
           }
         }
       },
