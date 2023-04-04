@@ -111,22 +111,6 @@ const recipeSchema = new Schema(
   }
 );
 
-// const recipeSchema = new Schema(
-// 	{
-// 		title: {
-// 			type: String,
-// 		},
-// 		category: {
-// 			type: String,
-// 		},
-// 		owner: {
-//             type: Schema.Types.ObjectId,
-//             ref: "user",
-//             required: true,
-//         },
-// 	}
-// );
-
 recipeSchema.post("save", handleMongooseError);
 
 const addSchema = Joi.object({
@@ -150,10 +134,6 @@ const addSchema = Joi.object({
     .required(),
 });
 
-// const addSchema = Joi.object({
-// 	title: Joi.string().required(),
-// 	category: Joi.string().required(),
-// });
 
 const schemas = { addSchema };
 
