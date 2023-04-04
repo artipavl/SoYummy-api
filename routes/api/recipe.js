@@ -34,9 +34,9 @@ router.get("/list/:category", recipe.recipesByCategory);
 
 router.get("/category-list", recipe.categoryList);
 
-router.get("/search/:title", recipe.recipeByTitle);
+router.get("/search", recipe.recipeByTitle);
 
-router.get("/search/ingredients/:ingredientId", recipe.recipesByIngredient);
+router.get("/searchByIngredient", recipe.recipesByIngredient);
 
 router.get("/ingredients", recipe.allIngredients);
 
