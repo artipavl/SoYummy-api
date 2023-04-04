@@ -6,12 +6,15 @@ const addFavorite = async (req, res) => {
 
 	const { _id: userId } = req.user;
 
-	const result = await recipe.findOne({ _id: id, favorites: userId });
+	const result = await recipe.findOne({
+		_id: id,
+
+		owner: userId,
+	});
 
 	if (result) {
-		throw HttpError(409, "Recipe already favorite");
+		throw HttpError(409, "user is owner");
 	}
-
 	const favoriteRecipe = await recipe.updateOne(
 		{ _id: id },
 		{
