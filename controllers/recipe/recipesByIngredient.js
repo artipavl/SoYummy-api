@@ -1,22 +1,34 @@
 const { recipe } = require("../../models");
+const { ingredient } = require("../../models");
 
 const { HttpError } = require("../../helpers");
 
-const recipesByIngredient = async (req, res) => {
-  const { ingredientId} = req.params;
-
+const recipesByIngredient = async (req, res) => {  
+  const { ttl } = req.query;
+  const { page = 1, limit = 6 } = req.query;
+  const skip = (page - 1) * limit;
  
-  const result = await recipe.find({ "ingredient.id": ingredientId });
+  const ingredientId = await ingredient.find({ ttl: ttl  }, { _id: 1 });
+  
+  const result = await recipe.find({ "ingredients.id": ingredientId },"-createdAt -updatedAt",
+    { skip, limit });
+  
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      result
-    },
-  });
-};
+  const total = await recipe
+		.find({ "ingredients.id": ingredientId })
+		.countDocuments();
+  
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        total,
+        result
+      },
+    });
+  };
 
-module.exports = recipesByIngredient;
+module.exports = recipesByIngredient
+
