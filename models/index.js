@@ -4,3 +4,4 @@ const { ingredient } = require("./ingredient");
 
 module.exports = { recipe, schemas, ingredient, auth };
 
+

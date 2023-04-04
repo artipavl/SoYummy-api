@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "6427191bcf5d2ff313dfff26"
+  },
+  "name": "user",
+  "email": "hicexeg442@mitigado.com",
+  "password": "$2a$10$.oolhSt.v7o9aq6FkmoAPOPzrgcrpDahDcdA0rDS2Zzq25/IQ29sa",
+  "token": "",
+  "avatarURL": "//www.gravatar.com/avatar/809bca9b3f6eeecd482ca63003a30bd6",
+  "verify": false,
+  "verificationCode": "cc6c5b20-5647-4ca8-ac2b-011599cf8c77",
+  "createdAt": {
+    "$date": "2023-03-31T17:32:11.920Z"
+  },
+  "updatedAt": {
+    "$date": "2023-03-31T17:32:11.920Z"
+  }
+}]
