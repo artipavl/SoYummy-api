@@ -1555,7 +1555,7 @@
             "type": "object",
             "description": "data",
             "properties": {
-              "recipe": {
+              "result": {
                 "$ref": "#/components/schemas/Recipe"
               }
             }
