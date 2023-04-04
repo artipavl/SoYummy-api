@@ -8,6 +8,9 @@ const router = express.Router();
 
 router.get("/", recipe.allRecipes);
 
+
+router.get("/popular-recipe", recipe.popularRecipes);
+
 router.get("/own-recipes", authenticate, recipe.takeOwnRecipes);
 
 router.post(
@@ -24,6 +27,7 @@ router.delete(
   recipe.deleteOwnRecipe
 );
 
+
 router.get("/main-page", recipe.recipesMainPage);
 
 router.get("/list/:category", recipe.recipesByCategory);
@@ -37,6 +41,5 @@ router.get("/search/ingredients/:ingredientId", recipe.recipesByIngredient);
 router.get("/ingredients", recipe.allIngredients);
 
 router.get("/:id", isValidId, recipe.recipesById);
-
 
 module.exports = router;
