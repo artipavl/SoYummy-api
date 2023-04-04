@@ -3,10 +3,11 @@ const { HttpError } = require("../../helpers");
 
 const deleteOwnRecipe = async (request, response) => {
     const { id } = request.params;
-    const result = await recipe.findByIdAndRemove(id);
-    if (!result) {
-      throw HttpError(404, "Not found");
+    const { _id: owner } = request.user;
+    if (!owner) {
+      throw HttpError(404, "Not found the owner");
     }
+    const result = await recipe.findByIdAndRemove(id);
     response.json({
       status: "success",
       code: 200,
@@ -18,4 +19,5 @@ const deleteOwnRecipe = async (request, response) => {
 };
 
 module.exports = deleteOwnRecipe
+
 

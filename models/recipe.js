@@ -94,13 +94,8 @@ const recipeSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "ingredient",
           required: true,
-          measure: {
-            type: String,
-            required: true,
-          },
         },
       ],
-      required: true,
     },
   },
   {
@@ -148,9 +143,7 @@ const addSchema = Joi.object({
 
 const schemas = { addSchema };
 
-
 const recipe = model("recipe", recipeSchema);
-
 
 module.exports = {
   schemas,
