@@ -1,4 +1,7 @@
-const recipe = require("./recipe");
-const auth = require("./auth");
+const { recipe, schemas } = require("./recipe");
+const auth  = require("./auth");
+const { ingredient } = require("./ingredient");
 
-module.exports = { recipe, auth };
+module.exports = { recipe, schemas, ingredient, auth };
+
+
