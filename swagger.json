@@ -438,6 +438,35 @@
         }
       }
     },
+    "/recipes/popular-recipe": {
+      "get": {
+        "tags": ["Recipe"],
+        "summary": "Get popular recipes",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipes/list/{category}": {
       "get": {
         "tags": ["Recipe"],
@@ -672,6 +701,129 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/IngredientsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/recipes/own-recipes": {
+      "get": {
+        "tags": ["Recipe"],
+        "summary": "Get own recipes",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Recipe"],
+        "summary": "Post own recipe",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostRecipeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/own-recipes/{id}": {
+      "delete": {
+        "tags": ["Recipe"],
+        "summary": "Delete own recipe",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Id recipe",
+            "exampl": "640cd5ac2d9fecf12e8897ee"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
                 }
               }
             }
@@ -1443,6 +1595,93 @@
             },
             "Recipes": {
               "$ref": "#/components/schemas/ownRecipesResponse"
+            }
+          }
+        }
+      },
+      "PostRecipeRequest": {
+        "type": "object",
+        "required": [
+          "title",
+          "category",
+          "instructions",
+          "description",
+          "thumb",
+          "time",
+          "preview"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "Spaghetti Bolognese"
+          },
+          "category": {
+            "type": "string",
+            "description": "category",
+            "example": "Beef"
+          },
+          "area": {
+            "type": "string",
+            "description": "area",
+            "example": "Italian"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "instructions",
+            "example": "Put the onion and oil in a large pan and fry over a fairly high heat for 3-4 mins. Add the garlic and mince and fry until they both brown. Add the mushrooms and herbs, and cook for another couple of mins.\r\n\r\nStir in the tomatoes, beef stock, tomato ketchup or purée, Worcestershire sauce and seasoning. Bring to the boil, then reduce the heat, cover and simmer, stirring occasionally, for 30 mins.\r\n\r\nMeanwhile, cook the spaghetti in a large pan of boiling, salted water, according to packet instructions. Drain well, run hot water through it, put it back in the pan and add a dash of olive oil, if you like, then stir in the meat sauce. Serve in hot bowls and hand round Parmesan cheese, for sprinkling on top."
+          },
+          "description": {
+            "type": "string",
+            "description": "description",
+            "example": "An Italian pasta dish made with spaghetti and a meat-based sauce, typically containing beef, tomatoes, onions, garlic, and herbs."
+          },
+          "thumb": {
+            "type": "string",
+            "description": "thumb",
+            "example": "https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg"
+          },
+          "preview": {
+            "type": "string",
+            "description": "preview",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
+          },
+          "time": {
+            "type": "string",
+            "description": "time",
+            "example": "45"
+          },
+
+          "youtube": {
+            "type": "string",
+            "description": "youtube",
+            "example": "https://www.youtube.com/watch?v=-gF8d-fitkU"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "tags",
+              "example": "Pasta"
+            }
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "ingredient",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "createdAt",
+                  "example": "640c2dd963a319ea671e372e"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "createdAt",
+                  "example": "2"
+                }
+              }
             }
           }
         }
