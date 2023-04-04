@@ -78,7 +78,7 @@ const recipeSchema = new Schema(
     },
     youtube: {
       type: String,
-      required: true,
+      delete: "",
     },
     tags: {
       type: [String],
@@ -91,9 +91,11 @@ const recipeSchema = new Schema(
     ingredients: {
       type: [
         {
-          type: Schema.Types.ObjectId,
-          ref: "ingredient",
-          required: true,
+          id: {
+            type: Schema.Types.ObjectId,
+            ref: "ingredient",
+            required: true,
+          },
           measure: {
             type: String,
             required: true,
@@ -109,22 +111,6 @@ const recipeSchema = new Schema(
   }
 );
 
-// const recipeSchema = new Schema(
-// 	{
-// 		title: {
-// 			type: String,
-// 		},
-// 		category: {
-// 			type: String,
-// 		},
-// 		owner: {
-//             type: Schema.Types.ObjectId,
-//             ref: "user",
-//             required: true,
-//         },
-// 	}
-// );
-
 recipeSchema.post("save", handleMongooseError);
 
 const addSchema = Joi.object({
@@ -136,21 +122,22 @@ const addSchema = Joi.object({
   thumb: Joi.string().required(),
   preview: Joi.string().required(),
   time: Joi.string().required().pattern(timeRegExp),
-  youtube: Joi.string().required(),
+  youtube: Joi.string(),
   tags: Joi.array().items(Joi.string()),
-  ingredients: Joi.array().items(Joi.string()).required(),
+  ingredients: Joi.array()
+    .items(
+      Joi.object({
+        id: Joi.string().required(),
+        measure: Joi.string().required(),
+      })
+    )
+    .required(),
 });
 
-// const addSchema = Joi.object({
-// 	title: Joi.string().required(),
-// 	category: Joi.string().required(),
-// });
 
 const schemas = { addSchema };
 
-
 const recipe = model("recipe", recipeSchema);
-
 
 module.exports = {
   schemas,

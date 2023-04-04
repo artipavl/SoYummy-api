@@ -14,10 +14,15 @@ const recipeByTitle = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
+  const total = await recipe
+		.find({ title: { $regex: title } })
+		.countDocuments();
+    
   res.json({
     status: "success",
     code: 200,
     data: {
+      total,
       result,
     },
   });

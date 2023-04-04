@@ -3,8 +3,7 @@ const { ingredient } = require("../../models");
 
 const { HttpError } = require("../../helpers");
 
-const recipesByIngredient = async (req, res) => {
-  
+const recipesByIngredient = async (req, res) => {  
   const { ttl } = req.query;
   const { page = 1, limit = 6 } = req.query;
   const skip = (page - 1) * limit;
@@ -17,14 +16,19 @@ const recipesByIngredient = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
+  const total = await recipe
+		.find({ "ingredients.id": ingredientId })
+		.countDocuments();
   
     res.json({
       status: "success",
       code: 200,
       data: {
+        total,
         result
       },
     });
   };
 
 module.exports = recipesByIngredient
+
