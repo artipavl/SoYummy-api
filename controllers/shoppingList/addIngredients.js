@@ -10,6 +10,7 @@ const addIngredients = async (req, res) => {
 		throw HttpError(400, "No list ingredients");
 	}
 	user.shoppingList.push(req.body);
+
 	const updatedUser = await user.save();
 
 	res.json({
