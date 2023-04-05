@@ -3,10 +3,14 @@ const { recipe } = require("../../models");
 const popularRecipesByCategory = async (req, res) => {
   const { category } = req.params;
 
+  const { page = 1, limit = 8 } = req.query;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
   const normalizedCategory =
     category[0].toUpperCase() + category.slice(1).toLowerCase();
 
-  const result = await recipe.find(
+  const recipes = await recipe.find(
     { category: normalizedCategory },
     {
       title: 1,
@@ -16,14 +20,19 @@ const popularRecipesByCategory = async (req, res) => {
       favorites: 1,
     }
   );
-  result
+  const result = recipes
     .sort((a, b) => b.favorites.length - a.favorites.length)
-    .splice(4, result.length);
+    .slice(startIndex, endIndex);
+
+  const total = await recipe
+    .find({ category: normalizedCategory })
+    .countDocuments();
 
   res.json({
     status: "success",
     code: 200,
     data: {
+      total,
       result,
     },
   });
