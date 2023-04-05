@@ -788,63 +788,16 @@
           {
             "in": "query",
             "name": "title",
-            "required": true,
             "type": "string",
             "description": "title recipe",
             "exampl": "Teriyaki Chicken Casserole"
           },
           {
             "in": "query",
-            "name": "page",
-            "type": "intager",
-            "description": "page recipe",
-            "exampl": 1
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "type": "intager",
-            "description": "limit recipe",
-            "exampl": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecipesResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotAuthorized"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/recipes/searchByIngredient": {
-      "get": {
-        "tags": ["Recipe"],
-        "summary": "Get recipe",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "ttl",
-            "required": true,
+            "name": "ingredient",
             "type": "string",
-            "description": "ttl ingredient",
-            "exampl": "Teriyaki Chicken Casserole"
+            "description": "ingredient",
+            "exampl": "Chicken"
           },
           {
             "in": "query",
@@ -885,6 +838,7 @@
         }
       }
     },
+
     "/recipes/ingredients": {
       "get": {
         "tags": ["Recipe"],
