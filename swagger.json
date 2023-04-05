@@ -437,6 +437,119 @@
         }
       }
     },
+    "/users/shopping-list": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user shopping list",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserShoppinglist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Add ingredient in user shopping list",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddIngredientShoppingListRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserShoppinglist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Remove listingredient in user shopping list",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["_id"],
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "id",
+                    "example": "2194d847192801764981s7mn9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserShoppinglist"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAuthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
 
     "/recipes": {
       "get": {
@@ -1461,6 +1574,85 @@
         }
       },
 
+      "UserShoppinglist": {
+        "type": "object",
+        "description": "response",
+        "properties": {
+          "code": {
+            "type": "intager",
+            "description": "code",
+            "example": "200"
+          },
+          "status": {
+            "type": "string",
+            "description": "status",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "description": "data",
+            "properties": {
+              "total": {
+                "type": "intager",
+                "description": "total",
+                "example": 1
+              },
+              "result": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "description": "ingredient",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "id",
+                      "example": "2194d847192801764981s7mn9"
+                    },
+                    "recipeId": {
+                      "type": "string",
+                      "description": "id recipe",
+                      "example": "2194d847192801764981s7mn9"
+                    },
+                    "ingredientId": {
+                      "type": "string",
+                      "description": "id ingredient",
+                      "example": "2194d847192801764981s7mn9"
+                    },
+                    "measure": {
+                      "type": "string",
+                      "description": "measure",
+                      "example": "2"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "AddIngredientShoppingListRequest": {
+        "type": "object",
+        "description": "ingredient",
+        "required": ["recipeId", "ingredientId", "measure"],
+        "properties": {
+          "recipeId": {
+            "type": "string",
+            "description": "id recipe",
+            "example": "640cd5ac2d9fecf12e889816"
+          },
+          "ingredientId": {
+            "type": "string",
+            "description": "id ingredient",
+            "example": "640c2dd963a319ea671e372c"
+          },
+          "measure": {
+            "type": "string",
+            "description": "measure",
+            "example": "4 tablespoons"
+          }
+        }
+      },
+
       "Recipe": {
         "type": "object",
         "properties": {
@@ -1561,12 +1753,12 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "description": "createdAt",
+                  "description": "id ingredient",
                   "example": "640c2dd963a319ea671e372e"
                 },
                 "measure": {
                   "type": "string",
-                  "description": "createdAt",
+                  "description": "measure",
                   "example": "2"
                 }
               }

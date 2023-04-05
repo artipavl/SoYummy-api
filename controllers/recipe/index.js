@@ -11,6 +11,7 @@ const allIngredients = require("./allIngredients");
 const takeOwnRecipes = require("./takeOwnRecipes");
 const addOwnRecipe = require("./addOwnRecipe");
 const deleteOwnRecipe = require("./deleteOwnRecipe");
+const popularRecipesByCategory = require("./popularRecipesByCategory");
 
 module.exports = {
 	allRecipes: ctrlWrapper(allRecipes),
@@ -24,4 +25,5 @@ module.exports = {
 	addOwnRecipe: ctrlWrapper(addOwnRecipe),
 	deleteOwnRecipe: ctrlWrapper(deleteOwnRecipe),
 	popularRecipes: ctrlWrapper(popularRecipes),
+  popularRecipesByCategory: ctrlWrapper(popularRecipesByCategory),
 };

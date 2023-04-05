@@ -9,20 +9,22 @@ router.get("/", recipe.allRecipes);
 
 router.get("/popular-recipe", recipe.popularRecipes);
 
+router.get("/popular-recipe/:category", recipe.popularRecipesByCategory);
+
 router.get("/own-recipes", authenticate, recipe.takeOwnRecipes);
 
 router.post(
-	"/own-recipes",
-	authenticate,
-	validateBody(schemas.addSchema),
-	recipe.addOwnRecipe
+  "/own-recipes",
+  authenticate,
+  validateBody(schemas.addSchema),
+  recipe.addOwnRecipe
 );
 
 router.delete(
-	"/own-recipes/:id",
-	authenticate,
-	isValidId,
-	recipe.deleteOwnRecipe
+  "/own-recipes/:id",
+  authenticate,
+  isValidId,
+  recipe.deleteOwnRecipe
 );
 
 router.get("/main-page", authenticate, recipe.recipesMainPage);

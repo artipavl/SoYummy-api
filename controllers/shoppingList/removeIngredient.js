@@ -32,9 +32,11 @@ const removeIngredient = async (req, res) => {
 		code: 200,
 		status: "Success",
 		data: {
+      total: updatedUser.shoppingList.length,
 			result: updatedUser.shoppingList,
 		},
 	});
+
 };
 
 module.exports = removeIngredient;
