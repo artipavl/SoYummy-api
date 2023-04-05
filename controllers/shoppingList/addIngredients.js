@@ -13,11 +13,12 @@ const addIngredients = async (req, res) => {
 	const updatedUser = await user.save();
 
 	res.json({
-		code: 200,
-		status: "Success",
-		data: {
-			result: updatedUser.shoppingList,
-		},
-	});
+    code: 200,
+    status: "Success",
+    data: {
+      total: updatedUser.shoppingList.length,
+      result: updatedUser.shoppingList,
+    },
+  });
 };
 module.exports = addIngredients;
