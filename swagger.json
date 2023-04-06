@@ -1043,6 +1043,16 @@
         "tags": ["Favorite"],
         "summary": "Get recipes",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Id recipe",
+            "exampl": "640cd5ac2d9fecf12e8897ee"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1122,6 +1132,16 @@
         "tags": ["Favorite"],
         "summary": "Get recipes",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Id recipe",
+            "exampl": "640cd5ac2d9fecf12e8897ee"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
