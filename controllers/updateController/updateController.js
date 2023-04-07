@@ -14,6 +14,7 @@ const updateUser = async (req, res, next) => {
       "Missing fields! You need to provide at least one field to proceed"
     );
   }
+
   if (req.file) {
     avatarURL = req.file.path;
   }

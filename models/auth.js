@@ -70,7 +70,7 @@ userSchema.post("save", handleMongooseError);
 const User = model("User", userSchema);
 
 const registerSchema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().min(1).max(20).required(),
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
@@ -84,13 +84,13 @@ const emailSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-	name: Joi.string().optional(),
+  name: Joi.string().min(1).max(20),
 });
 const schemas = {
-	registerSchema,
-	loginSchema,
-	emailSchema,
-	updateUserSchema,
+  registerSchema,
+  loginSchema,
+  emailSchema,
+  updateUserSchema,
 };
 
 module.exports = {

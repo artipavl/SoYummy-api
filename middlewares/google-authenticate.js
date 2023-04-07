@@ -1,7 +1,6 @@
 const passport = require("passport");
 const { Strategy } = require("passport-google-oauth2");
 const bcrypt = require("bcryptjs");
-const gravatar = require("gravatar");
 const { v4: uuidv4 } = require("uuid");
 
 const {
@@ -20,7 +19,7 @@ const googleParams = {
 
 const googleCallback = async (req, accecToken, refreshToken, profile, done) => {
   try {
-    const { email, displayName } = profile;
+    const { email, displayName, picture } = profile;
     const user = await User.findOne({ email });
 
     if (user) {
@@ -28,7 +27,7 @@ const googleCallback = async (req, accecToken, refreshToken, profile, done) => {
     }
 
     const password = await bcrypt.hash(uuidv4(), 10);
-    const avatarURL = gravatar.url(email);
+    const avatarURL = picture;
     const verificationCode = uuidv4();
 
     const newUser = await User.create({

@@ -38,8 +38,8 @@ const uploadCloud = multer({ storage });
 router.patch(
   "/update-user",
   authenticate,
-  validateBody(schemas.updateUserSchema),
   uploadCloud.single("avatar"),
+  validateBody(schemas.updateUserSchema),
   controllers.updateUser
 );
 
