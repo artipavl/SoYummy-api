@@ -1,8 +1,8 @@
-const { ingredient } =  require('../../models');
+const { Ingredient } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const allIngredients = async (req, res) => {
-  const result = await ingredient.find();
+  const result = await Ingredient.find();
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -16,5 +16,3 @@ const allIngredients = async (req, res) => {
 };
 
 module.exports = allIngredients;
-
-

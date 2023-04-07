@@ -137,9 +137,9 @@ const addSchema = Joi.object({
 
 const schemas = { addSchema };
 
-const recipe = model("recipe", recipeSchema);
+const Recipe = model("Recipe", recipeSchema);
 
 module.exports = {
   schemas,
-  recipe,
+  Recipe,
 };

@@ -4,7 +4,9 @@ const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const { updateController: controllers } = require("../../controllers");
 const { authenticate, validateBody } = require("../../middlewares");
-const { schemas } = require("../../models/auth");
+const {
+  auth: { schemas },
+} = require("../../models");
 
 const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
 

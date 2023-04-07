@@ -1,4 +1,6 @@
-const { recipe } = require("../../models");
+const {
+  recipe: { Recipe },
+} = require("../../models");
 
 const recipesMainPage = async (request, response) => {
   const CATEGORIES = [
@@ -24,7 +26,7 @@ const recipesMainPage = async (request, response) => {
   const limit = 4;
 
   for (const category of CATEGORIES) {
-    const dishes = await recipe.find({ category }, "-createdAt -updatedAt", {
+    const dishes = await Recipe.find({ category }, "-createdAt -updatedAt", {
       skip,
       limit,
     });
