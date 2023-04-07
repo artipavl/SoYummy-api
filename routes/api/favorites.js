@@ -1,13 +1,13 @@
 const express = require("express");
 
-const { favorites } = require("../../controllers");
+const { favorites: controllers } = require("../../controllers");
 const { isValidId, authenticate } = require("../../middlewares");
 const router = express.Router();
 
-router.get("/", authenticate, favorites.getAllFavorite);
+router.get("/", authenticate, controllers.getAllFavorite);
 
-router.patch("/:id", authenticate, isValidId, favorites.addFavorite);
+router.patch("/:id", authenticate, isValidId, controllers.addFavorite);
 
-router.put("/:id", authenticate, isValidId, favorites.removeFavorite);
+router.put("/:id", authenticate, isValidId, controllers.removeFavorite);
 
 module.exports = router;

@@ -1,9 +1,11 @@
-const { recipe } = require("../../models");
+const {
+  recipe: { Recipe },
+} = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const categoryList = async (req, res) => {
   console.log("result: ");
-  const result = await recipe.distinct("category");
+  const result = await Recipe.distinct("category");
   if (!result) {
     throw HttpError(500, "Server error");
   }

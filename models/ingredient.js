@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
 const ingredientSchema = new Schema(
@@ -27,6 +27,6 @@ const ingredientSchema = new Schema(
 
 ingredientSchema.post("save", handleMongooseError);
 
-const ingredient = model("ingredients", ingredientSchema);
+const Ingredient = model("Ingredients", ingredientSchema);
 
-module.exports = { ingredient ,}
+module.exports = Ingredient;

@@ -1,7 +1,9 @@
-const { recipe } = require("../../models");
+const {
+  recipe: { Recipe },
+} = require("../../models");
 
 const popularRecipes = async (req, res) => {
-  const result = await recipe.find(
+  const result = await Recipe.find(
     {},
     {
       title: 1,

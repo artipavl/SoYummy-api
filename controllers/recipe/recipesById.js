@@ -1,11 +1,11 @@
 const { mongoose } = require("mongoose");
-const { recipe } = require("../../models");
+const { recipe:{Recipe} } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const recipesById = async (request, response) => {
 	const { id } = request.params;
 
-	const result = await recipe.aggregate([
+	const result = await Recipe.aggregate([
 		{
 			$match: {
 				_id: mongoose.Types.ObjectId(id),

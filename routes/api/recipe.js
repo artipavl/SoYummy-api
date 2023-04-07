@@ -1,42 +1,44 @@
 const express = require("express");
 
-const { recipe } = require("../../controllers");
+const { recipe: controllers } = require("../../controllers");
 const { isValidId, authenticate, validateBody } = require("../../middlewares");
-const { schemas } = require("../../models");
+const {
+  recipe: { schemas },
+} = require("../../models");
 const router = express.Router();
 
-router.get("/", recipe.allRecipes);
+router.get("/", controllers.allRecipes);
 
-router.get("/popular-recipe", recipe.popularRecipes);
+router.get("/popular-recipe", controllers.popularRecipes);
 
-router.get("/popular-recipe/:category", recipe.popularRecipesByCategory);
+router.get("/popular-recipe/:category", controllers.popularRecipesByCategory);
 
-router.get("/own-recipes", authenticate, recipe.takeOwnRecipes);
+router.get("/own-recipes", authenticate, controllers.takeOwnRecipes);
 
 router.post(
   "/own-recipes",
   authenticate,
   validateBody(schemas.addSchema),
-  recipe.addOwnRecipe
+  controllers.addOwnRecipe
 );
 
 router.delete(
   "/own-recipes/:id",
   authenticate,
   isValidId,
-  recipe.deleteOwnRecipe
+  controllers.deleteOwnRecipe
 );
 
-router.get("/main-page", authenticate, recipe.recipesMainPage);
+router.get("/main-page", authenticate, controllers.recipesMainPage);
 
-router.get("/list/:category", authenticate, recipe.recipesByCategory);
+router.get("/list/:category", authenticate, controllers.recipesByCategory);
 
-router.get("/category-list", authenticate, recipe.categoryList);
+router.get("/category-list", authenticate, controllers.categoryList);
 
-router.get("/search", authenticate, recipe.searchRecipe);
+router.get("/search", authenticate, controllers.searchRecipe);
 
-router.get("/ingredients", authenticate, recipe.allIngredients);
+router.get("/ingredients", authenticate, controllers.allIngredients);
 
-router.get("/:id", authenticate, isValidId, recipe.recipesById);
+router.get("/:id", authenticate, isValidId, controllers.recipesById);
 
 module.exports = router;
