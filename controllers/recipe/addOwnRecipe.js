@@ -6,7 +6,7 @@ const addOwnRecipe = async (req, res) => {
   const { _id: owner } = req.user;
 
   console.log("req.file :", req.file);
-  console.log("req.body: ", req.body);
+  // console.log("req.body: ", req.body);
 
   const thumb = req.file.path;
 
