@@ -1,16 +1,17 @@
+const cloudinary = require("cloudinary").v2;
+
 const {
   recipe: { Recipe },
 } = require("../../models");
 
 const addOwnRecipe = async (req, res) => {
   const { _id: owner } = req.user;
-
-  console.log("req.file :", req.file);
-  // console.log("req.body: ", req.body);
-
   const thumb = req.file.path;
+  const preview = cloudinary.url(req.file.filename, {
+    transformation: ["thumbnail"],
+  });
 
-  const result = await Recipe.create({ ...req.body, thumb, owner });
+  const result = await Recipe.create({ ...req.body, thumb, preview, owner });
   res.status(201).json({
     status: "success",
     code: 201,

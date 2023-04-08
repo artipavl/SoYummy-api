@@ -24,13 +24,10 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "recipes",
     allowed_formats: ["jpg", "png"],
-    eager: [
+    transformation: [
       {
-        width: 100,
-        height: 100,
         crop: "thumb",
         gravity: "auto",
-        zoom: 0.75,
       },
     ],
   },
@@ -50,7 +47,7 @@ router.post(
   "/own-recipes",
   authenticate,
   uploadCloud.single("thumb"),
-  // validateBody(schemas.addSchema),
+  validateBody(schemas.addSchema),
   controllers.addOwnRecipe
 );
 
