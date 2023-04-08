@@ -24,12 +24,12 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "recipes",
     allowed_formats: ["jpg", "png"],
-    transformation: [
-      {
-        crop: "thumb",
-        gravity: "auto",
-      },
-    ],
+    transformation: {
+      width: 700,
+      height: 700,
+      crop: "fill",
+      gravity: "auto",
+    },
   },
 });
 
