@@ -84,7 +84,7 @@ const emailSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-  name: Joi.string().min(1).max(20),
+  name: Joi.string().min(1).max(20).required(),
 });
 const schemas = {
   registerSchema,
