@@ -39,6 +39,9 @@ const listIngredients = async (req, res) => {
 										},
 									],
 								},
+								{
+									_id: "$$this._id",
+								},
 							],
 						},
 					},
@@ -46,13 +49,13 @@ const listIngredients = async (req, res) => {
 			},
 		},
 		{
-			$unset: ["ingr_nfo", "shoppingList.ingredientId"],
+			$unset: ["ingr_nfo"],
 		},
 	]);
-
-	if (!result) {
-		throw HttpError(400, "No list ingredients");
-	}
+	console.log(result);
+	// if (!result) {
+	// 	throw HttpError(400, "No list ingredients");
+	// }
 
 	const [ingridients] = result;
 
