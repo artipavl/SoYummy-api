@@ -1,39 +1,24 @@
 const express = require("express");
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const { recipe: controllers } = require("../../controllers");
 const { isValidId, authenticate, validateBody } = require("../../middlewares");
 const {
   recipe: { schemas },
 } = require("../../models");
-
-const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
+const uploadCloud = require("../../middlewares/cloudinarySender");
 
 const router = express.Router();
 
-cloudinary.config({
-  cloud_name: CLOUDINARY_NAME,
-  api_key: CLOUDINARY_KEY,
-  api_secret: CLOUDINARY_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "recipes",
-    allowed_formats: ["jpg", "png"],
-    transformation: {
-      width: 700,
-      height: 700,
-      crop: "fill",
-      gravity: "auto",
-    },
+const cloudOptions = {
+  fieldname: "thumb",
+  destFolder: "recipes",
+  transformation: {
+    width: 700,
+    height: 700,
+    crop: "fill",
+    gravity: "auto",
   },
-});
-
-const uploadCloud = multer({ storage });
+};
 
 router.get("/", controllers.allRecipes);
 
@@ -46,7 +31,7 @@ router.get("/own-recipes", authenticate, controllers.takeOwnRecipes);
 router.post(
   "/own-recipes",
   authenticate,
-  uploadCloud.single("thumb"),
+  uploadCloud(cloudOptions),
   validateBody(schemas.addSchema),
   controllers.addOwnRecipe
 );

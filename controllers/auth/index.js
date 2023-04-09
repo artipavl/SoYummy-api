@@ -5,6 +5,7 @@ const getCurrentUser = require("./getCurrentUser");
 const logoutUser = require("./logoutUser");
 const getAchievement = require("./getAchievement");
 const googleAuth = require("./googleAuth");
+const updateUser = require("./updateController");
 
 module.exports = {
   registerUser: ctrlWrapper(registerUser),
@@ -13,4 +14,5 @@ module.exports = {
   logoutUser: ctrlWrapper(logoutUser),
   getAchievement: ctrlWrapper(getAchievement),
   googleAuth: ctrlWrapper(googleAuth),
+  updateUser: ctrlWrapper(updateUser),
 };
