@@ -27,10 +27,15 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/recipes", recipeRouter);
 
-app.use("/api/users", authRouter, emailRouter, userUpdateRouter, shoppingListRoute);
+app.use(
+  "/api/users",
+  authRouter,
+  emailRouter,
+  userUpdateRouter,
+  shoppingListRoute
+);
 
 app.use("/api/favorites", favoriteRouter);
-
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
