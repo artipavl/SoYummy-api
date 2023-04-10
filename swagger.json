@@ -369,6 +369,7 @@
                   "avatar": {
                     "type": "string",
                     "format": "binary",
+                    "contentType": ["image/png", "image/jpeg"],
                     "description": "Avatar's image"
                   },
                   "name": {
