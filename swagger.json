@@ -352,22 +352,38 @@
         }
       }
     },
+
     "/users/update-user": {
       "patch": {
         "tags": ["Users"],
         "summary": "User update",
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Update object",
+          "description": "Users's info object",
           "required": true,
           "content": {
-            "multipare/form-data": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserRequest"
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "contentType": ["image/png", "image/jpeg"],
+                    "description": "Avatar's image"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20,
+                    "description": "User's name"
+                  }
+                }
               }
             }
           }
         },
+
         "responses": {
           "200": {
             "description": "OK",
@@ -902,10 +918,10 @@
         "summary": "Post own recipe",
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Update object",
+          "description": "Users's info object",
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/PostRecipeRequest"
               }
@@ -1403,7 +1419,6 @@
 
       "UpdateUserRequest": {
         "type": "object",
-        "required": ["name"],
         "properties": {
           "name": {
             "type": "string",
@@ -1895,11 +1910,11 @@
         "required": [
           "title",
           "category",
+          "area",
           "instructions",
           "description",
-          "thumb",
           "time",
-          "preview"
+          "ingredients"
         ],
         "properties": {
           "title": {
@@ -1909,6 +1924,22 @@
           },
           "category": {
             "type": "string",
+            "enum": [
+              "Beef",
+              "Breakfast",
+              "Chicken",
+              "Dessert",
+              "Goat",
+              "Lamb",
+              "Miscellaneous",
+              "Pasta",
+              "Pork",
+              "Seafood",
+              "Side",
+              "Starter",
+              "Vegan",
+              "Vegeterian"
+            ],
             "description": "category",
             "example": "Beef"
           },
@@ -1928,14 +1959,11 @@
             "example": "An Italian pasta dish made with spaghetti and a meat-based sauce, typically containing beef, tomatoes, onions, garlic, and herbs."
           },
           "thumb": {
-            "type": "string",
+            "type": "file",
+            "format": "binary",
+            "contentType": ["image/png", "image/jpeg"],
             "description": "thumb",
             "example": "https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg"
-          },
-          "preview": {
-            "type": "string",
-            "description": "preview",
-            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
           },
           "time": {
             "type": "string",
@@ -1958,22 +1986,21 @@
           },
           "ingredients": {
             "type": "array",
+            "uniqueItems": true,
             "items": {
               "type": "object",
-              "description": "ingredient",
               "properties": {
                 "id": {
                   "type": "string",
-                  "description": "createdAt",
-                  "example": "640c2dd963a319ea671e372e"
+                  "description": "Ingredient's id (ObjectId)"
                 },
                 "measure": {
                   "type": "string",
-                  "description": "createdAt",
-                  "example": "2"
+                  "description": "Measure"
                 }
               }
-            }
+            },
+            "example": [{ "id": "640c2dd963a319ea671e372e", "measure": "2" }]
           }
         }
       },
