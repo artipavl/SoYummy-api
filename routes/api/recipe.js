@@ -1,73 +1,63 @@
 const express = require("express");
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const { recipe: controllers } = require("../../controllers");
-const { isValidId, authenticate, validateBody } = require("../../middlewares");
+const {
+  isValidId,
+  authenticate,
+  validateBody,
+  uploadCloud,
+} = require("../../middlewares");
 const {
   recipe: { schemas },
 } = require("../../models");
 
-const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
-
 const router = express.Router();
 
-cloudinary.config({
-  cloud_name: CLOUDINARY_NAME,
-  api_key: CLOUDINARY_KEY,
-  api_secret: CLOUDINARY_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "recipes",
-    allowed_formats: ["jpg", "png"],
-    transformation: {
-      width: 700,
-      height: 700,
-      crop: "fill",
-      gravity: "auto",
-    },
+const cloudOptions = {
+  fieldname: "thumb",
+  destFolder: "recipes",
+  transformation: {
+    width: 700,
+    height: 700,
+    crop: "fill",
+    gravity: "auto",
   },
-});
+};
 
-const uploadCloud = multer({ storage });
+router
+  .get("/", controllers.allRecipes)
 
-router.get("/", controllers.allRecipes);
+  .get("/popular-recipe", controllers.popularRecipes)
 
-router.get("/popular-recipe", controllers.popularRecipes);
+  .get("/popular-recipe/:category", controllers.popularRecipesByCategory)
 
-router.get("/popular-recipe/:category", controllers.popularRecipesByCategory);
+  .get("/own-recipes", authenticate, controllers.takeOwnRecipes)
 
-router.get("/own-recipes", authenticate, controllers.takeOwnRecipes);
+  .post(
+    "/own-recipes",
+    authenticate,
+    uploadCloud(cloudOptions),
+    validateBody(schemas.addSchema),
+    controllers.addOwnRecipe
+  )
 
-router.post(
-  "/own-recipes",
-  authenticate,
-  uploadCloud.single("thumb"),
-  validateBody(schemas.addSchema),
-  controllers.addOwnRecipe
-);
+  .delete(
+    "/own-recipes/:id",
+    authenticate,
+    isValidId,
+    controllers.deleteOwnRecipe
+  )
 
-router.delete(
-  "/own-recipes/:id",
-  authenticate,
-  isValidId,
-  controllers.deleteOwnRecipe
-);
+  .get("/main-page", authenticate, controllers.recipesMainPage)
 
-router.get("/main-page", authenticate, controllers.recipesMainPage);
+  .get("/list/:category", authenticate, controllers.recipesByCategory)
 
-router.get("/list/:category", authenticate, controllers.recipesByCategory);
+  .get("/category-list", authenticate, controllers.categoryList)
 
-router.get("/category-list", authenticate, controllers.categoryList);
+  .get("/search", authenticate, controllers.searchRecipe)
 
-router.get("/search", authenticate, controllers.searchRecipe);
+  .get("/ingredients", authenticate, controllers.allIngredients)
 
-router.get("/ingredients", authenticate, controllers.allIngredients);
-
-router.get("/:id", authenticate, isValidId, controllers.recipesById);
+  .get("/:id", authenticate, isValidId, controllers.recipesById);
 
 module.exports = router;

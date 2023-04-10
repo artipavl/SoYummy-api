@@ -1,34 +1,60 @@
 const express = require("express");
 const { auth: controllers } = require("../../controllers");
-const { validateBody, authenticate, passport } = require("../../middlewares");
+const {
+  validateBody,
+  authenticate,
+  passport,
+  uploadCloud,
+} = require("../../middlewares");
 const {
   auth: { schemas },
 } = require("../../models");
 
 const router = express.Router();
 
-router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+const cloudOptions = {
+  fieldname: "avatar",
+  destFolder: "avatars",
+  transformation: {
+    width: 100,
+    height: 100,
+    crop: "thumb",
+    gravity: "auto",
+    zoom: 0.75,
+  },
+};
 
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
-  controllers.googleAuth
-);
+router
+  .get(
+    "/google",
+    passport.authenticate("google", { scope: ["email", "profile"] })
+  )
 
-router.post(
-  "/register",
-  validateBody(schemas.registerSchema),
-  controllers.registerUser
-);
-router.post("/login", validateBody(schemas.loginSchema), controllers.loginUser);
+  .get(
+    "/google/callback",
+    passport.authenticate("google", { session: false }),
+    controllers.googleAuth
+  )
 
-router.get("/current", authenticate, controllers.getCurrentUser);
+  .post(
+    "/register",
+    validateBody(schemas.registerSchema),
+    controllers.registerUser
+  )
+  .post("/login", validateBody(schemas.loginSchema), controllers.loginUser)
 
-router.get("/current/achievement", authenticate, controllers.getAchievement);
+  .get("/current", authenticate, controllers.getCurrentUser)
 
-router.post("/logout", authenticate, controllers.logoutUser);
+  .get("/current/achievement", authenticate, controllers.getAchievement)
+
+  .post("/logout", authenticate, controllers.logoutUser)
+
+  .patch(
+    "/update-user",
+    authenticate,
+    uploadCloud(cloudOptions),
+    validateBody(schemas.updateUserSchema),
+    controllers.updateUser
+  );
 
 module.exports = router;

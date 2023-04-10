@@ -5,8 +5,11 @@ const { authenticate } = require("../../middlewares");
 
 const router = express.Router();
 
-router.get("/shopping-list", authenticate, controllers.listIngredients);
-router.post("/shopping-list", authenticate, controllers.addIngredients);
-router.patch("/shopping-list", authenticate, controllers.removeIngredient);
+router
+  .get("/shopping-list", authenticate, controllers.listIngredients)
+
+  .post("/shopping-list", authenticate, controllers.addIngredients)
+
+  .patch("/shopping-list", authenticate, controllers.removeIngredient);
 
 module.exports = router;
