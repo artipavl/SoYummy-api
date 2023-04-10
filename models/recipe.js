@@ -33,7 +33,7 @@ const recipeSchema = new Schema(
     },
     area: {
       type: String,
-      required: [true, "Set area for recipe"],
+      default: "Worldwide",
     },
     instructions: {
       type: String,
@@ -115,7 +115,7 @@ recipeSchema.post("save", handleMongooseError);
 const addSchema = Joi.object({
   title: Joi.string().required(),
   category: Joi.string().required(),
-  area: Joi.string().required(),
+  area: Joi.string().optional(),
   instructions: Joi.string().required(),
   description: Joi.string().required(),
   thumb: Joi.string().optional(),
