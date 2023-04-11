@@ -1985,7 +1985,7 @@
           "ingredients[0][id]": {
             "type": "string",
             "description": "Ingredient's id (ObjectId)",
-            "example": "Pasta"
+            "example": "640c2dd963a319ea671e3691"
           },
           "ingredients[0][measure]": {
             "type": "string",
