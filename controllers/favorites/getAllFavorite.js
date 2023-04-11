@@ -1,4 +1,4 @@
-const { HttpError } = require("../../helpers");
+// const { HttpError } = require("../../helpers");
 const {
   recipe: { Recipe },
 } = require("../../models");
@@ -10,10 +10,10 @@ const getAllFavorite = async (req, res) => {
   const result = await Recipe.find({ favorites: userId }, "", { skip, limit });
   const total = await Recipe.find({ favorites: userId }).countDocuments();
 
-  if (!result) {
-    throw new HttpError(404, "Not found");
-  }
-  res.status(200).json({
+  // if (!result) {
+  //   throw new HttpError(404, "Not found");
+  // }
+  res.json({
     code: 200,
     status: "success",
     data: {

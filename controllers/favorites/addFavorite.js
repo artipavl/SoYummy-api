@@ -8,15 +8,21 @@ const addFavorite = async (req, res) => {
 
   const { _id: userId } = req.user;
 
-  const result = await Recipe.findOne({
-    _id: id,
+  const recipe = await Recipe.findById(id);
 
-    owner: userId,
-  });
-
-  if (result) {
-    throw HttpError(409, "user is owner");
+  if (String(recipe.owner) === String(userId)) {
+    throw HttpError(409, "You can't add your own recipe to favorites");
   }
+
+  for (const ownerId of recipe.favorites) {
+    if (String(ownerId) === String(userId)) {
+      throw HttpError(
+        409,
+        `The recipe "${recipe.title}" is already added to your favorites`
+      );
+    }
+  }
+
   const favoriteRecipe = await Recipe.updateOne(
     { _id: id },
     {
@@ -26,13 +32,13 @@ const addFavorite = async (req, res) => {
   );
 
   if (!favoriteRecipe) {
-    throw HttpError(400);
+    throw HttpError(400, `Unable to add recipe "${recipe.title}" to favorites`);
   }
 
-  res.status(200).json({
+  res.json({
     code: 200,
     status: "success",
-    message: `Recipe with id ${id} added to favorite success`,
+    message: `The recipe "${recipe.title}" successfully added to favorites`,
   });
 };
 

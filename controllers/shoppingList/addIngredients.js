@@ -1,19 +1,29 @@
 const {
-	auth: { User },
+  auth: { User },
 } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const addIngredients = async (req, res) => {
-	const { _id: userId } = req.user;
-	const user = await User.findByIdAndUpdate(userId, { new: true });
-	if (!user.shoppingList) {
-		throw HttpError(400, "No list ingredients");
-	}
-	user.shoppingList.push(req.body);
+  const { _id: userId } = req.user;
+  const user = await User.findByIdAndUpdate(userId, { new: true });
 
-	const updatedUser = await user.save();
+  for (const ingredient of user.shoppingList) {
+    if (
+      String(ingredient.ingredientId) === req.body.ingredientId &&
+      String(ingredient.recipeId) === req.body.recipeId
+    ) {
+      throw HttpError(
+        400,
+        "This ingredient is already added to your shoppinglist"
+      );
+    }
+  }
 
-	res.json({
+  user.shoppingList.push(req.body);
+
+  const updatedUser = await user.save();
+
+  res.json({
     code: 200,
     status: "Success",
     data: {
