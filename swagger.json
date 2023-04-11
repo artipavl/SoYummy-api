@@ -638,8 +638,23 @@
             "type": "string",
             "description": "category recipe",
             "exampl": "Beef"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "intager",
+            "description": "page recipe",
+            "exampl": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "intager",
+            "description": "limit recipe",
+            "exampl": 1
           }
         ],
+
         "responses": {
           "200": {
             "description": "OK",
