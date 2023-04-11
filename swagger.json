@@ -628,7 +628,7 @@
     "/recipes/list/{category}": {
       "get": {
         "tags": ["Recipe"],
-        "summary": "Get recipe",
+        "summary": "Get recipes by category",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -683,7 +683,7 @@
     "/recipes/{id}": {
       "get": {
         "tags": ["Recipe"],
-        "summary": "Get recipe",
+        "summary": "Get recipes by ID",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -739,7 +739,7 @@
     "/recipes/main-page": {
       "get": {
         "tags": ["Recipe"],
-        "summary": "Get recipe",
+        "summary": "Get recipes for main page",
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -768,7 +768,7 @@
     "/recipes/category-list": {
       "get": {
         "tags": ["Recipe"],
-        "summary": "Get recipe",
+        "summary": "Get category list",
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -798,7 +798,7 @@
     "/recipes/search": {
       "get": {
         "tags": ["Recipe"],
-        "summary": "Get recipe",
+        "summary": "Search for recipes",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -955,7 +955,7 @@
     "/recipes/own-recipes/{id}": {
       "delete": {
         "tags": ["Recipe"],
-        "summary": "Delete own recipe",
+        "summary": "Delete own recipe by ID",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -1011,7 +1011,7 @@
     "/favorites": {
       "get": {
         "tags": ["Favorite"],
-        "summary": "Get recipes",
+        "summary": "Get favorite recipes",
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -1057,7 +1057,7 @@
     "/favorites/{id}": {
       "patch": {
         "tags": ["Favorite"],
-        "summary": "Get recipes",
+        "summary": "Update favorite recipes",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -1146,7 +1146,7 @@
       },
       "put": {
         "tags": ["Favorite"],
-        "summary": "Get recipes",
+        "summary": "Update favorite recipes",
         "security": [{ "Bearer": [] }],
         "parameters": [
           {
@@ -1910,11 +1910,12 @@
         "required": [
           "title",
           "category",
-          "area",
           "instructions",
           "description",
+          "thumb",
           "time",
-          "ingredients"
+          "ingredients[0][id]",
+          "ingredients[0][measure]"
         ],
         "properties": {
           "title": {
@@ -1976,31 +1977,20 @@
             "description": "youtube",
             "example": "https://www.youtube.com/watch?v=-gF8d-fitkU"
           },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "tags",
-              "example": "Pasta"
-            }
+          "tags[0]": {
+            "type": "string",
+            "description": "tags",
+            "example": "Pasta"
           },
-          "ingredients": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "Ingredient's id (ObjectId)"
-                },
-                "measure": {
-                  "type": "string",
-                  "description": "Measure"
-                }
-              }
-            },
-            "example": [{ "id": "640c2dd963a319ea671e372e", "measure": "2" }]
+          "ingredients[0][id]": {
+            "type": "string",
+            "description": "Ingredient's id (ObjectId)",
+            "example": "Pasta"
+          },
+          "ingredients[0][measure]": {
+            "type": "string",
+            "description": "Measure",
+            "example": "2 g"
           }
         }
       },
@@ -2030,16 +2020,6 @@
                 }
               }
             }
-          }
-        }
-      },
-
-      "Error": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "error"
           }
         }
       },
