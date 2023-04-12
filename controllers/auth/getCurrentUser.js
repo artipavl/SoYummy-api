@@ -14,13 +14,16 @@ const getCurrentUser = async (req, res, next) => {
     token: 1,
     shoppingList: 1,
   });
+
   if (!currentUser) {
     throw HttpError(400, "User not found");
   }
+
   res.json({
     code: 200,
     status: "Success",
     data: { user: currentUser },
   });
 };
+
 module.exports = getCurrentUser;

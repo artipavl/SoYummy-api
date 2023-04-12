@@ -4,8 +4,8 @@ const {
 } = require("../../models");
 const { HttpError } = require("../../helpers");
 
-const recipesById = async (request, response) => {
-  const { id } = request.params;
+const recipesById = async (req, res) => {
+  const { id } = req.params;
 
   const result = await Recipe.aggregate([
     {
@@ -52,7 +52,7 @@ const recipesById = async (request, response) => {
     throw HttpError(404, "Not found");
   }
 
-  response.json({
+  res.json({
     status: "success",
     code: 200,
     data: {

@@ -5,6 +5,7 @@ const { HttpError } = require("../../helpers");
 
 const addIngredients = async (req, res) => {
   const { _id: userId } = req.user;
+
   const user = await User.findByIdAndUpdate(userId, { new: true });
 
   for (const ingredient of user.shoppingList) {
@@ -32,4 +33,5 @@ const addIngredients = async (req, res) => {
     },
   });
 };
+
 module.exports = addIngredients;

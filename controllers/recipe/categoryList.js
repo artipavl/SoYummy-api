@@ -1,14 +1,9 @@
 const {
   recipe: { Recipe },
 } = require("../../models");
-const { HttpError } = require("../../helpers");
 
 const categoryList = async (req, res) => {
-  console.log("result: ");
   const result = await Recipe.distinct("category");
-  if (!result) {
-    throw HttpError(500, "Server error");
-  }
 
   res.json({
     status: "success",
@@ -16,4 +11,5 @@ const categoryList = async (req, res) => {
     data: { result },
   });
 };
+
 module.exports = categoryList;

@@ -18,7 +18,6 @@ const registerUser = async (req, res, next) => {
 
   const verificationCode = uuidv4();
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
   const avatarURL = gravatar.url(email);
 
   const newUser = await User.create({

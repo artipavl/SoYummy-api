@@ -2,10 +2,12 @@ const {
   recipe: { Recipe },
 } = require("../../models");
 
-const takeOwnRecipes = async (request, response) => {
-  const { _id: owner } = request.user;
+const takeOwnRecipes = async (req, res) => {
+  const { _id: owner } = req.user;
+
   const result = await Recipe.find({ owner }, "-createdAt -updatedAt");
-  response.json({
+
+  res.json({
     status: "success",
     code: 200,
     data: {

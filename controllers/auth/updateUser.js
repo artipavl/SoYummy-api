@@ -27,10 +27,12 @@ const updateUser = async (req, res, next) => {
     },
     { new: true, projection: { name: 1, email: 1, avatarURL: 1, token: 1 } }
   );
+
   res.json({
     code: 200,
     status: "Success",
     data: { user: updatedUser },
   });
 };
+
 module.exports = updateUser;

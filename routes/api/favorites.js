@@ -1,5 +1,4 @@
 const express = require("express");
-
 const { favorites: controllers } = require("../../controllers");
 const { isValidId, authenticate } = require("../../middlewares");
 

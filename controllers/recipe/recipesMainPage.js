@@ -1,25 +1,8 @@
 const {
-  recipe: { Recipe },
+  recipe: { Recipe, CATEGORIES },
 } = require("../../models");
 
-const recipesMainPage = async (request, response) => {
-  const CATEGORIES = [
-    "Beef",
-    "Breakfast",
-    "Chicken",
-    "Dessert",
-    "Goat",
-    "Lamb",
-    "Miscellaneous",
-    "Pasta",
-    "Pork",
-    "Seafood",
-    "Side",
-    "Starter",
-    "Vegan",
-    "Vegetarian",
-  ];
-
+const recipesMainPage = async (req, res) => {
   const dishesArray = [];
 
   const skip = 0;
@@ -33,7 +16,7 @@ const recipesMainPage = async (request, response) => {
     dishesArray.push({ category, recipes: dishes });
   }
 
-  response.json({
+  res.json({
     status: "success",
     code: 200,
     data: {
