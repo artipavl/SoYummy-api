@@ -35,6 +35,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         avatarURL: user.avatarURL,
         token,
+        shoppingList: user.shoppingList,
       },
     },
   });
