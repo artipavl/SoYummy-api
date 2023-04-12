@@ -1,6 +1,5 @@
 const express = require("express");
 const { shoppingList: controllers } = require("../../controllers");
-
 const { authenticate } = require("../../middlewares");
 
 const router = express.Router();

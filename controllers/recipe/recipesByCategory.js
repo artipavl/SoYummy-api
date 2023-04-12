@@ -2,10 +2,10 @@ const {
   recipe: { Recipe },
 } = require("../../models");
 
-const recipesByCategory = async (request, response) => {
-  const { category } = request.params;
+const recipesByCategory = async (req, res) => {
+  const { category } = req.params;
 
-  const { page = 1, limit = 8 } = request.query;
+  const { page = 1, limit = 8 } = req.query;
   const skip = (page - 1) * limit;
 
   const normalizedCategory =
@@ -16,11 +16,12 @@ const recipesByCategory = async (request, response) => {
     "title category thumb preview",
     { skip, limit }
   );
+
   const total = await Recipe.find({
     category: normalizedCategory,
   }).countDocuments();
 
-  response.json({
+  res.json({
     status: "success",
     code: 200,
     data: {

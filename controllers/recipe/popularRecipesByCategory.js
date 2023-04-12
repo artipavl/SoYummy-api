@@ -4,8 +4,8 @@ const {
 
 const popularRecipesByCategory = async (req, res) => {
   const { category } = req.params;
-
   const { page = 1, limit = 8 } = req.query;
+
   const skip = (page - 1) * limit;
 
   const normalizedCategory =

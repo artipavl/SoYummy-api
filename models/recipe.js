@@ -5,6 +5,23 @@ const { handleMongooseError } = require("../helpers");
 
 const timeRegExp = /^\d+$/;
 
+const CATEGORIES = [
+  "Beef",
+  "Breakfast",
+  "Chicken",
+  "Dessert",
+  "Goat",
+  "Lamb",
+  "Miscellaneous",
+  "Pasta",
+  "Pork",
+  "Seafood",
+  "Side",
+  "Starter",
+  "Vegan",
+  "Vegetarian",
+];
+
 const recipeSchema = new Schema(
   {
     title: {
@@ -14,22 +31,7 @@ const recipeSchema = new Schema(
     category: {
       type: String,
       required: [true, "Set category for recipe"],
-      enum: [
-        "Beef",
-        "Breakfast",
-        "Chicken",
-        "Dessert",
-        "Goat",
-        "Lamb",
-        "Miscellaneous",
-        "Pasta",
-        "Pork",
-        "Seafood",
-        "Side",
-        "Starter",
-        "Vegan",
-        "Vegetarian",
-      ],
+      enum: CATEGORIES,
     },
     area: {
       type: String,
@@ -136,6 +138,7 @@ const schemas = { addSchema };
 const Recipe = model("Recipe", recipeSchema);
 
 module.exports = {
+  CATEGORIES,
   schemas,
   Recipe,
 };
