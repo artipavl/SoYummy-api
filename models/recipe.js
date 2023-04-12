@@ -118,8 +118,6 @@ const addSchema = Joi.object({
   area: Joi.string().optional(),
   instructions: Joi.string().required(),
   description: Joi.string().required(),
-  // thumb: Joi.string().optional(),
-  // preview: Joi.string().optional(),
   time: Joi.string().required().pattern(timeRegExp),
   youtube: Joi.string(),
   tags: Joi.array().items(Joi.string()),
