@@ -24,16 +24,13 @@ const resendVerifyEmail = async (req, res) => {
 
   await sendEmail(verifyEmail);
 
-  await User.findByIdAndUpdate(user._id, {
-    verify: true,
-    verificationCode: "",
-  });
 
   res.json({
     code: 200,
     status: "success",
-    message: "Verify email send success",
+    message: "Letter sent",
   });
+
 };
 
 module.exports = resendVerifyEmail;

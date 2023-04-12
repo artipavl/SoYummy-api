@@ -638,8 +638,23 @@
             "type": "string",
             "description": "category recipe",
             "exampl": "Beef"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "intager",
+            "description": "page recipe",
+            "exampl": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "intager",
+            "description": "limit recipe",
+            "exampl": 1
           }
         ],
+
         "responses": {
           "200": {
             "description": "OK",
@@ -1985,7 +2000,7 @@
           "ingredients[0][id]": {
             "type": "string",
             "description": "Ingredient's id (ObjectId)",
-            "example": "Pasta"
+            "example": "640c2dd963a319ea671e3691"
           },
           "ingredients[0][measure]": {
             "type": "string",
