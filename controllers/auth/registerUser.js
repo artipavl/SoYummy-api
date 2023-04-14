@@ -10,18 +10,22 @@ const { v4: uuidv4 } = require("uuid");
 const { FRONTEND_URL } = process.env;
 
 const registerUser = async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { name, email, password } = req.body;
+
+  const normalizedEmail = email.toLowerCase();
+
+  const user = await User.findOne({ email: normalizedEmail });
   if (user) {
     throw HttpError(409, "Email already in use");
   }
 
   const verificationCode = uuidv4();
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  const avatarURL = gravatar.url(email);
+  const avatarURL = gravatar.url(normalizedEmail);
 
   const newUser = await User.create({
-    ...req.body,
+    name,
+    email: normalizedEmail,
     password: hashPassword,
     avatarURL,
     verificationCode,
@@ -32,7 +36,7 @@ const registerUser = async (req, res, next) => {
   }
 
   const verifyEmail = {
-    to: email,
+    to: normalizedEmail,
     subject: "Verification email",
     html: `<a target="_blank" href="${FRONTEND_URL}/verification/${verificationCode}">Click here to verification email</a>`,
   };
