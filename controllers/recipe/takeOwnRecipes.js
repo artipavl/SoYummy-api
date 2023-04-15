@@ -9,11 +9,13 @@ const takeOwnRecipes = async (req, res) => {
 
   const result = await Recipe.find({ owner }, "-createdAt -updatedAt", { skip, limit });
 
+  const total = await Recipe.find({ owner: owner }).countDocuments();
+
   res.json({
     status: "success",
     code: 200,
     data: {
-      total: result.length,
+      total,
       result,
     },
   });
