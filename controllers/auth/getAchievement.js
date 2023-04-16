@@ -6,7 +6,7 @@ const {
 const { HttpError, getDays, getUserRecipeCount } = require("../../helpers");
 
 const getAchievement = async (req, res) => {
-	const { name, createdAt, _id: userId } = req.user;
+	const { name, createdAt, _id: userId, shoppingList } = req.user;
 
 	const countDay = getDays(createdAt);
 
@@ -23,6 +23,7 @@ const getAchievement = async (req, res) => {
 		annexedDays: countDay,
 		ownCount: allRecipes.owner,
 		favoritesCount: allRecipes.favorites,
+		shoppingListCount: shoppingList.length,
 	};
 	await User.findByIdAndUpdate(userId, { achievements });
 

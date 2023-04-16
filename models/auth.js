@@ -66,6 +66,7 @@ const userSchema = new Schema(
 			annexedDays: Number,
 			ownCount: Number,
 			favoritesCount: Number,
+			shoppingListCount: Number,
 		},
 	},
 	{ versionKey: false, timestamps: true }
